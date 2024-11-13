@@ -18,7 +18,7 @@ train_set = datasets.MNIST(root= './data', train=True, download=True, transform=
 test_set = datasets.MNIST(root = './data' , train=False, download=True, transform=transform)
 
 #Need Dataloaders to get labels from the dataset variables
-train_loader = DataLoader(dataset=train_set, batch_size=64, shuffle=False)
+train_loader = DataLoader(dataset=train_set, batch_size=64, shuffle=True)
 test_loader = DataLoader(dataset=test_set, batch_size=1000, shuffle=True)
 
 ##########################################################
@@ -64,16 +64,16 @@ class Model(nn.Module):
         x = self.flatten(x)
         x = self.dropout(x)
         x = torch.relu(self.fc1(x))
-        x = torch.softmax(self.fc2(x), dim = 1)
+        #x = torch.softmax(self.fc2(x), dim = 1)
         return x
     
 model = Model()
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 #training loop
 
-epochs = 5
+epochs = 15
 for epoch in range(epochs):
     model.train()
     running_loss = 0.0
